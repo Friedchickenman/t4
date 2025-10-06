@@ -1,14 +1,27 @@
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainPage from "./pages/mainPage.tsx";
-import AboutPage from "./pages/aboutPage.tsx";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import MainPage from './pages/mainPage.tsx';
+import AboutPage from './pages/aboutPage.tsx';
+import Root from './Root.tsx';
+
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <Root />,
+        children: [
+            {
+                index: true,
+                element: <MainPage />,
+            },
+            {
+                path: 'about',
+                element: <AboutPage />,
+            },
+        ],
+    },
+]);
 
 createRoot(document.getElementById('root')!).render(
-    <BrowserRouter>
-        <Routes>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/about" element={<AboutPage />} />
-        </Routes>
-    </BrowserRouter>
+    <RouterProvider router={router} />
 );

@@ -15,12 +15,8 @@ const sampleUsers: User[] = [
     { id: 5, name: 'Bob Brown', email: 'bob.b@example.com', role: 'Viewer', status: 'Active' },
 ];
 
-// MainContent가 필요로 하는 props 타입 정의
-type MainContentProps = {
-    toggleSidebar: () => void;
-};
 
-export const MainContent: React.FC<MainContentProps> = ({ toggleSidebar }) => {
+export const MainContent: React.FC = () => {
     const getStatusClass = (status: User['status']) => {
         switch (status) {
             case 'Active': return 'bg-green-100 text-green-800';
@@ -35,11 +31,7 @@ export const MainContent: React.FC<MainContentProps> = ({ toggleSidebar }) => {
             {/* 헤더: 제목, 버튼 등 */}
             <header className="flex justify-between items-center mb-6">
                 <div className="flex items-center">
-                    <button onClick={toggleSidebar} className="md:hidden text-gray-500 mr-4" aria-label="Open menu">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
+
                     <h1 className="text-2xl font-semibold text-gray-800">User List</h1>
                 </div>
                 <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
