@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import CustomSidebar from "../layouts/customSidebar.tsx";
+import CustomSidebar from "./customSidebar.tsx"; // 이 파일이 있다고 가정합니다.
 
-// 1. TypeScript로 데이터의 타입을 정의합니다. (Interface)
+// 1. TypeScript로 데이터의 타입을 정의합니다.
 interface User {
     id: number;
     name: string;
@@ -10,7 +10,7 @@ interface User {
     status: 'Active' | 'Inactive' | 'Pending';
 }
 
-// 2. 정의한 타입에 맞는 샘플 데이터를 준비합니다.
+// 2. 샘플 데이터를 준비합니다.
 const sampleUsers: User[] = [
     { id: 1, name: 'John Doe', email: 'john.doe@example.com', role: 'Admin', status: 'Active' },
     { id: 2, name: 'Jane Smith', email: 'jane.smith@example.com', role: 'Editor', status: 'Inactive' },
@@ -19,12 +19,12 @@ const sampleUsers: User[] = [
     { id: 5, name: 'Tom Brown', email: 'tom.brown@example.com', role: 'Viewer', status: 'Pending' },
 ];
 
-
-
+// 3. MainContent 컴포넌트의 props 타입을 정의합니다.
 type MainContentProps = {
     toggleSidebar: () => void;
 };
 
+// 🌟 해결: 컴포넌트 이름을 'MainContent'로 변경
 const MainContent: React.FC<MainContentProps> = ({ toggleSidebar }) => {
     const getStatusClass = (status: User['status']) => {
         switch (status) {
@@ -70,9 +70,9 @@ const MainContent: React.FC<MainContentProps> = ({ toggleSidebar }) => {
                             <td className="py-4 px-6 whitespace-nowrap">{user.email}</td>
                             <td className="py-4 px-6 whitespace-nowrap">{user.role}</td>
                             <td className="py-4 px-6 whitespace-nowrap">
-                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusClass(user.status)}`}>
-                    {user.status}
-                  </span>
+                                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusClass(user.status)}`}>
+                                        {user.status}
+                                    </span>
                             </td>
                             <td className="py-4 px-6 whitespace-nowrap text-right text-sm font-medium">
                                 <a href="#" className="text-indigo-600 hover:text-indigo-900">Edit</a>
@@ -90,8 +90,8 @@ const MainContent: React.FC<MainContentProps> = ({ toggleSidebar }) => {
                             <div className="flex justify-between items-center mb-2">
                                 <p className="font-bold text-gray-900">{user.name}</p>
                                 <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusClass(user.status)}`}>
-                  {user.status}
-                </span>
+                                    {user.status}
+                                </span>
                             </div>
                             <p className="text-sm text-gray-600 break-all">{user.email}</p>
                             <p className="text-sm text-gray-500 mt-1">Role: {user.role}</p>
@@ -107,8 +107,9 @@ const MainContent: React.FC<MainContentProps> = ({ toggleSidebar }) => {
     );
 };
 
-// 4. 전체 레이아웃을 조합하는 메인 컴포넌트
-export default function MainPage() {
+
+// 전체 레이아웃을 조합하는 메인 컴포넌트
+export default function CustomLayout() {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
 
     const toggleSidebar = () => {
@@ -118,7 +119,6 @@ export default function MainPage() {
     return (
         <div className="flex min-h-screen relative bg-gray-100">
             <CustomSidebar isOpen={isSidebarOpen} />
-            {/* 사이드바가 열렸을 때 뒷배경 어둡게 처리 */}
             {isSidebarOpen && (
                 <div
                     onClick={toggleSidebar}
@@ -127,6 +127,7 @@ export default function MainPage() {
                 ></div>
             )}
             <div className="flex-1 flex flex-col">
+                {/* 🌟 해결: 변경된 'MainContent' 컴포넌트를 호출 */}
                 <MainContent toggleSidebar={toggleSidebar} />
             </div>
         </div>
