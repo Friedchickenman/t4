@@ -1,16 +1,13 @@
-import CustomLayout from "../../layouts/customLayout.tsx";
 import {Outlet} from "react-router";
 
 function TodoIndexPage() {
     return (
-        <CustomLayout>
-            <div>
-                LIST ADD
+        <div className="w-full h-full">
+            <div className="text-2xl font-extrabold">
+                Todo Index Page
             </div>
-            <div>
-                <Outlet></Outlet>
-            </div>
-        </CustomLayout>
+            <Outlet/>
+        </div>
     );
 }
 
