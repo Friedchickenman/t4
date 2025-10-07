@@ -1,20 +1,19 @@
-import React, { lazy, Suspense } from 'react';
-import CustomLayout from "../layouts/customLayout";
+import { lazy, Suspense } from 'react';
+import { Route } from 'react-router-dom';
+import TodoIndexPage from "../pages/todo/indexPage.tsx";
 
-const Loading = <div>Loading...</div>;
+const Loading = <div>Loading................</div>;
 
-const MainPage = lazy(() => import('../pages/mainPage'));
-const AboutPage = lazy(() => import('../pages/aboutPage'));
+const Main = lazy(() => import("../pages/mainPage"));
+const About = lazy(() => import("../pages/aboutPage"));
 
-export function rootRoutes() {
-    return [
-        {
-            path: '/',
-            element: <CustomLayout><Suspense fallback={Loading}><MainPage /></Suspense></CustomLayout>,
-        },
-        {
-            path: '/about',
-            element: <CustomLayout><Suspense fallback={Loading}><AboutPage /></Suspense></CustomLayout>,
-        },
-    ];
+export default function rootRouter() {
+  return [
+    <Route key="/" path={'/'} element={<Suspense fallback={Loading}><Main/></Suspense>} />,
+    <Route key="/about" path={'/about'} element={<Suspense fallback={Loading}><About/></Suspense>} />,
+
+      <Route path='/todo' element={<TodoIndexPage/>}>
+
+      </Route>
+  ];
 }
