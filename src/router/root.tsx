@@ -1,9 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { Route } from 'react-router-dom';
-import TodoIndexPage from "../pages/todo/indexPage.tsx";
-import ListPage from "../pages/todo/listPage.tsx";
-import {Navigate} from "react-router";
-import todoRouter from "./todoRouter.tsx";
+import MainLayout from '../layouts/mainLayout'; // MainLayout import 추가
 
 const Loading = <div>Loading................</div>;
 
@@ -12,15 +9,20 @@ const About = lazy(() => import("../pages/aboutPage"));
 
 export default function rootRouter() {
   return [
-    <Route key="/" path={'/'} element={<Suspense fallback={Loading}><Main/></Suspense>} />,
-    <Route key="/about" path={'/about'} element={<Suspense fallback={Loading}><About/></Suspense>} />,
-      todoRouter(),
-
-      <Route path='/todo' element={<TodoIndexPage/>}>
-
-          <Route index element={<Navigate to={'list'} replace />}></Route>
-
-          <Route path='list' element={<ListPage/>}></Route>
-      </Route>
+    // MainLayout으로 Main 페이지를 감싸줌
+    <Route 
+      key="/" 
+      path={'/'} 
+      element={
+        <MainLayout>
+          <Suspense fallback={Loading}><Main/></Suspense>
+        </MainLayout>
+      } 
+    />,
+    <Route 
+      key="/about" 
+      path={'/about'} 
+      element={<Suspense fallback={Loading}><About/></Suspense>} 
+    />,
   ];
 }
