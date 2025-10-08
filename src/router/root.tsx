@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Navigate } from 'react-router-dom';
 import CustomLayout from '../layouts/customLayout';
 
 const Loading = <div>Loading................</div>;
@@ -7,7 +7,10 @@ const Loading = <div>Loading................</div>;
 // 페이지 컴포넌트 import
 const Main = lazy(() => import("../pages/mainPage"));
 const About = lazy(() => import("../pages/aboutPage"));
-// import TodoIndex from '../pages/todo/indexPage'; // 잠시 주석 처리
+import TodoIndex from '../pages/todo/indexPage';
+const ListPage = lazy(() => import("../pages/todo/listPage"));
+const AddPage = lazy(() => import("../pages/todo/addPage"));
+const ReadPage = lazy(() => import("../pages/todo/readPage"));
 
 export default function rootRouter() {
   return [
@@ -23,15 +26,20 @@ export default function rootRouter() {
       path={'/about'}
       element={<CustomLayout><Suspense fallback={Loading}><About/></Suspense></CustomLayout>}
     />,
-    // Todo 페이지 경로를 테스트용으로 잠시 변경
+    // Todo 중첩 라우팅
     <Route
         key="/todo"
         path="/todo"
         element={
             <CustomLayout>
-                <div className="text-2xl font-bold">Todo Route Test</div>
+                <TodoIndex/>
             </CustomLayout>
         }
-    />
+    >
+        <Route index element={<Navigate to={'list'} replace />} />
+        <Route path={'list'} element={<Suspense fallback={Loading}><ListPage/></Suspense>} />
+        <Route path={'add'} element={<Suspense fallback={Loading}><AddPage/></Suspense>} />
+        <Route path={'read/:tno'} element={<Suspense fallback={Loading}><ReadPage/></Suspense>} />
+    </Route>
   ];
 }
