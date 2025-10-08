@@ -1,20 +1,17 @@
-import { Navigate, Route } from "react-router";
-import TodoIndexPage from "../pages/todo/indexPage.tsx";
-import { lazy, Suspense } from "react";
+import { Route } from "react-router-dom";
+import CustomLayout from "../layouts/customLayout";
+import TodoIndex from '../pages/todo/indexPage'; // lazy 대신 직접 import
 
-const Loading = <div>Loading................</div>;
-
-const TodoList = lazy(() =>
-    import('../pages/todo/listPage.tsx'));
-
-export default function todoRouter(): Element {
-
-    return (
-        <Route path='/todo' element={<TodoIndexPage/>}>
-            <Route index element={<Navigate to={'list'} replace />} ></Route>
-            <Route path='list'
-                   element={<Suspense fallback={Loading}><TodoList/></Suspense>}>
-            </Route>
-        </Route>
-    )
+export default function todoRouter() {
+  return [
+    <Route
+        key="/todo"
+        path="/todo"
+        element={
+            <CustomLayout>
+                <TodoIndex/>
+            </CustomLayout>
+        }
+    />
+  ];
 }

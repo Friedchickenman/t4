@@ -4,32 +4,34 @@ import CustomLayout from '../layouts/customLayout';
 
 const Loading = <div>Loading................</div>;
 
+// 페이지 컴포넌트 import
 const Main = lazy(() => import("../pages/mainPage"));
 const About = lazy(() => import("../pages/aboutPage"));
-const TodoIndexPage = lazy(() => import("../pages/todo/indexPage")); // TodoIndexPage import 추가
-const ListPage = lazy(() => import("../pages/todo/listPage")); // ListPage import 추가
+// import TodoIndex from '../pages/todo/indexPage'; // 잠시 주석 처리
 
 export default function rootRouter() {
   return [
+    // 메인 페이지 경로
     <Route
       key="/"
       path={'/'}
       element={<CustomLayout><Suspense fallback={Loading}><Main/></Suspense></CustomLayout>}
     />,
+    // About 페이지 경로
     <Route
       key="/about"
       path={'/about'}
       element={<CustomLayout><Suspense fallback={Loading}><About/></Suspense></CustomLayout>}
     />,
+    // Todo 페이지 경로를 테스트용으로 잠시 변경
     <Route
-      key="/todo"
-      path={'/todo'}
-      element={<CustomLayout><Suspense fallback={Loading}><TodoIndexPage/></Suspense></CustomLayout>}
-    >
-      {/* /todo 경로로 접근 시 기본적으로 ListPage를 보여줌 */}
-      <Route index element={<ListPage />} />
-      {/* /todo/list 경로로 접근 시 ListPage를 보여줌 */}
-      <Route path="list" element={<ListPage />} />
-    </Route>
+        key="/todo"
+        path="/todo"
+        element={
+            <CustomLayout>
+                <div className="text-2xl font-bold">Todo Route Test</div>
+            </CustomLayout>
+        }
+    />
   ];
 }
