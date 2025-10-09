@@ -25,17 +25,25 @@ function ListComponent() {
     const size: number = !sizeStr ? 10 : Number(pageStr)
 
     const [serverData, setServerData] = useState(initState)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
 
-        getTodoList(page,size).then(data=> {
-            setServerData(data)
-        })
+        setLoading(true)
 
-    }, [page,size]);
+        setTimeout(() => {
+        getTodoList(page,size).then(data => {
+            setServerData(data)
+            setLoading(false)
+        })
+        }, 2000)
+
+    }, [page,size])
 
     return (
         <div className="border-2 border-blue-100 mt-10 mr-2 ml-2">
+
+            <LoadingComponent isLoading={loading}/>
 
             <div className="flex flex-wrap mx-auto justify-center p-6">
                 List Component
