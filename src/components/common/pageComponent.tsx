@@ -17,11 +17,13 @@ function PageComponent({serverData}: PageComponentProps<unknown>) {
         <div>
             {prev && <div>이전</div>}
             {pageNumArr.map((num,idx) =>
-                <div key={idx}>
+                <div key={idx}
+                     onClick={() => moveListPage(end + 1)
+                     >
                     {num}
                 </div>)}
 
-            {next && <div>다음</div>}
+            {next && <div onClick={() => moveListPage(end + 1)}>다음</div>}
         </div>
     );
 }
