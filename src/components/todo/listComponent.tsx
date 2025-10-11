@@ -1,6 +1,7 @@
 import {useSearchParams} from "react-router";
 import {useEffect, useState} from "react";
 import {getTodoList} from "../../api/todoApi.tsx";
+import PageComponent from "../common/pageComponent.tsx";
 
 
 const initState:PageResponse<Todo> = {
@@ -97,6 +98,8 @@ function ListComponent() {
                     </ul>
                 )}
             </div>
+
+            <PageComponent serverData={serverData}></PageComponent>
         </div>
     );
 }

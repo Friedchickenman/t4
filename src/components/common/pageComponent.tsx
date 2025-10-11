@@ -15,9 +15,13 @@ function PageComponent({serverData}: PageComponentProps<unknown>) {
 
     return (
         <div>
-            <div>이전</div>
-            <div></div>
-            <div>다음</div>
+            {prev && <div>이전</div>}
+            {pageNumArr.map((num,idx) =>
+                <div key={idx}>
+                    {num}
+                </div>)}
+
+            {next && <div>다음</div>}
         </div>
     );
 }
