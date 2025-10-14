@@ -1,4 +1,4 @@
-import {useSearchParams} from "react-router";
+import {useNavigate, useSearchParams} from "react-router";
 import {useEffect, useState} from "react";
 import {getTodoList} from "../../api/todoApi.tsx";
 import PageComponent from "../common/pageComponent.tsx";
@@ -23,10 +23,11 @@ function ListComponent() {
     const page: number = !pageStr ? 1 : Number(pageStr)
 
     const sizeStr:string | null = searchParams.get("size")
-    const size: number = !sizeStr ? 10 : Number(pageStr)
+    const size: number = !sizeStr ? 10 : Number(sizeStr)
 
     const [serverData, setServerData] = useState(initState)
     const [loading, setLoading] = useState(false)
+    const [refresh, setRefresh] = useState(false)
 
     useEffect(() => {
 
@@ -40,6 +41,14 @@ function ListComponent() {
         }, 2000)
 
     }, [page,size])
+
+    const navigate = useNavigate()
+
+    const moveListPage = (pageParam:number) => {
+
+        navigate(`/todo/list?page=${pageParam}&size=${size}`)
+
+    }
 
     return (
         <div className="border-2 border-blue-100 mt-10 mr-2 ml-2">
