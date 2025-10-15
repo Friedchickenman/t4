@@ -2,7 +2,7 @@ import {useNavigate, useSearchParams} from "react-router";
 import {useEffect, useState} from "react";
 import {getTodoList} from "../../api/todoApi.tsx";
 import PageComponent from "../common/pageComponent.tsx";
-
+import { debounce } from "lodash";
 
 const initState:PageResponse<Todo> = {
     dtoList: [],
@@ -44,18 +44,20 @@ function ListComponent() {
 
     const navigate = useNavigate()
 
-    const moveListPage = (pageParam:number) => {
+    const moveListPage = debounce((pageParam:number) => {
 
         //주소창의 page값
         console.log(page , pageParam)
         //동일한 페이지를 호출한다면
         if(page === pageParam) {
-            setRefresh(!refresh)
+            setTimeout(() => {
+                setRefresh(prev => !prev);
+            }, 3000) // 3초 후 변경
         }
 
         navigate(`/todo/list?page=${pageParam}&size=${size}`)
 
-    }
+    },1000)
 
     return (
         <div className="border-2 border-blue-100 mt-10 mr-2 ml-2">
