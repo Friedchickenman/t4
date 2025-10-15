@@ -40,11 +40,18 @@ function ListComponent() {
         })
         }, 2000)
 
-    }, [page,size])
+    }, [page,size,refresh])
 
     const navigate = useNavigate()
 
     const moveListPage = (pageParam:number) => {
+
+        //주소창의 page값
+        console.log(page , pageParam)
+        //동일한 페이지를 호출한다면
+        if(page === pageParam) {
+            setRefresh(!refresh)
+        }
 
         navigate(`/todo/list?page=${pageParam}&size=${size}`)
 
